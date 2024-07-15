@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .user-list h3 {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Users</h2> 
+        <br>
+        <input type="text" id="filterInput" placeholder="Filter by name..." onkeyup="filterNames()">
+        <br><br>
+        <div id="userList">
+            {% for user in data %}
+                <h3>{{ user.name }}</h3>
+                <form action="{{ url_for('discussion.follow') }}" method="POST"> 
+                    <input type="hidden" id="userId" name="userId" value="{{current_user.id}}
+                    "required>   
+                    <input type="hidden" id="profile" name="profile" value="{{user._id}}
+                    "required>   
+                    <button  type="submit" class="btn">  
+                        Follow 
+                    </button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function filterNames() {
+            const filterValue = document.getElementById('filterInput').value.toLowerCase();
+            const userList = document.getElementById('userList');
+            const users = userList.getElementsByTagName('h3');
+
+            for (let i = 0; i < users.length; i++) {
+                const name = users[i].textContent || users[i].innerText;
+                if (name.toLowerCase().indexOf(filterValue) > -1) {
+                    users[i].style.display = '';
+                } else {
+                    users[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

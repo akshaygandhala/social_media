@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+    <title>Social Media</title>
+</head>
+<body> 
+    <div class="container">
+        <h1>Hi, &#128075;  Welcome to Discussions</h1> 
+        <div id="profile-options" class="profile-options"> 
+            <a href="{{ url_for('auth.login') }}"> <button class="btn">Login</button> </a> <br><br>
+            <a href="{{ url_for('auth.register') }}"><button class="btn">Register</button> </a> <br><br>
+            <a href="{{ url_for('discussion.discussions') }}"><button class="btn">Discuss</button> </a>   
+        </div>
+    </div>
+</body>
+</html>

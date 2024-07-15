@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.discussion-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.discussion-card:hover {
+    transform: translateY(-5px);
+}
+
+.discussion-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+p {
+    font-size: 1em;
+    color: #555;
+}
+
+.tags {
+    margin-top: 10px;
+    margin-bottom: 4px;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 3px;
+    font-size: 0.9em;
+} 
+.btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+
+}
+
+.btn:hover {
+    background-color: #218838;
+}
+
+.profile-options {
+    display: none;
+    margin-top: 10px;
+}
+.profile-options a, .profile-options form {
+    display: block;
+    margin: 5px 0;
+}
+.filter-input {
+    margin: 20px 0;
+    padding: 10px;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.btn-red{
+    background-color: red;
+    text-decoration: none;
+}
+.comment {
+    margin: 7px;
+}
+.com{
+    padding: 10px;
+    margin: 4px;
+    padding-bottom: 13px;
+}
+

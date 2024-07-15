@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Discussion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/discuss.css') }}">
+</head>
+<body> 
+    <div class="container">
+        <h1>Hi, {{ current_user.name }} &#128075; Discussions</h1>
+        <a href="/discussions/create"><button class="btn">Add Post</button></a>
+        <input type="text" id="filter-input" class="filter-input" placeholder="Filter by title, content, or hashtags...">
+        <button class="btn filter-input" onclick="toggleProfileOptions()">My Profile</button>
+        <div id="profile-options" class="profile-options">
+            <a href="{{ url_for('auth.logout') }}" class="btn btn-red">Logout</a>
+            <form action="{{ url_for('discussion.delete_profile') }}" method="POST">
+                <input type="hidden" name="postId" value="{{ current_user.id }}" required>
+                <button type="submit" class="btn btn-red">Delete Profile</button>
+            </form>
+            <a href="{{ url_for('discussion.users') }}" class="btn">All Users</a>
+            <a href="{{ url_for('discussion.posts') }}" class="btn">Posts yours</a>
+        </div>
+    </div>
+
+    <div class="container">
+        {% for discussion in data %}
+            <div class="discussion-card">
+                <img src="{{ discussion.image }}" alt="{{ discussion.title }}" class="discussion-image">
+                <h2>{{ discussion.title }}</h2>
+                <p>{{ discussion.discuss }}</p>
+                <div class="tags">
+                    {% for tag in discussion.tag %}
+                        <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div> 
+                <form action="{{ url_for('discussion.comment') }}" method="POST">
+                    <input type="text" id="comment" name="comment" required class="filter-input">  
+                    <input type="hidden" id="postId" name="postId" value="{{discussion['_id']}}
+                    "required>  
+                    <input type="hidden" id="userId" name="userId" value="{{ current_user.id }}" required>  
+                    <button  type="submit" class="tag">
+                        Add comment
+                    </button>
+                </form>
+                <form action="{{ url_for('discussion.like') }}" method="POST"> 
+                    <input type="hidden" id="postId" name="postId" value="{{discussion['_id']}}
+                    "required>  
+                    <input type="hidden" id="userId" name="userId" value="{{ current_user.id }}" required>  
+                    <button  type="submit" class="btn">	&#9829;
+                        {{ discussion['count'] if 'count' in discussion else 0 }} Likes
+                    </button>
+                </form> 
+                <h4>Comments:</h4>
+                <div class="comments">
+                    {% if 'comments' in discussion and discussion.comments %}
+                        {% for comment in discussion.comments %}
+                            <div class="comment">
+                                <strong class="com">	&#8594; &nbsp;{{ comment.name }} : {{ comment.comment}}</strong>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No comments available.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+    <script>
+        document.getElementById('filter-input').addEventListener('input', function() {
+            let filterValue = this.value.toLowerCase();
+            let discussions = document.querySelectorAll('.discussion-card');
+
+            discussions.forEach(function(discussion) {
+                let title = discussion.querySelector('h2').textContent.toLowerCase();
+                let content = discussion.querySelector('p').textContent.toLowerCase();
+                let tags = Array.from(discussion.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase()).join(' ');
+
+                if (title.includes(filterValue) || content.includes(filterValue) || tags.includes(filterValue)) {
+                    discussion.style.display = '';
+                } else {
+                    discussion.style.display = 'none';
+                }
+            });
+        });
+        function toggleProfileOptions() {
+            var profileOptions = document.getElementById('profile-options');
+            if (profileOptions.style.display === 'none' || profileOptions.style.display === '') {
+                profileOptions.style.display = 'block';
+            } else {
+                profileOptions.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
